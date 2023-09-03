@@ -58,7 +58,7 @@ public class Game4Activity extends AppCompatActivity {
         });
 
         FirebaseApp.initializeApp(this);
-        resetPoints();
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         buttonList = new ArrayList<>();
         buttonList.add(findViewById(R.id.btnTerm1));
@@ -71,7 +71,7 @@ public class Game4Activity extends AppCompatActivity {
 
         timerTextView = findViewById(R.id.tajmer);
         pointsTextView = findViewById(R.id.tvScore);
-
+        pointsTextView.setText("Bodovi: " + String.valueOf(getTotalPoints()));
 
         readDataFromFirebase();
     }
@@ -139,7 +139,7 @@ public class Game4Activity extends AppCompatActivity {
 
 
             solutionEditText.setOnEditorActionListener((v, actionId, event) -> {
-                if (actionId == EditorInfo.IME_NULL) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String userInput = v.getText().toString();
                     if (userInput.equalsIgnoreCase(selectedObject.getResenje())) {
                         stopButtonUpdates();
@@ -256,15 +256,10 @@ public class Game4Activity extends AppCompatActivity {
 // a zatim čuva osvojene bodove i prikazuje dijalog sa porukom koja sadrži broj bodova. Kada korisnik zatvori dijalog,
 // metoda označava da je dijalog zatvoren.
     private void showPointsDialog(int points) {
-        if (isPointsDialogShown) {
-            return;
-        }
-
-        isPointsDialogShown = true;
 
         savePoints(points);
         int totalPoints = getTotalPoints();
-
+        endGame();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Bodovi");
         builder.setMessage("Osvojili ste " + points + " bodova!");
@@ -279,11 +274,11 @@ public class Game4Activity extends AppCompatActivity {
     //Metoda savePoints() čuva osvojene bodove korisnika.
     private void savePoints(int points) {
         SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        this.totalPoints = preferences.getInt("totalPoints", 0);
-        this.totalPoints += points;
-        pointsTextView.setText("Bodovi: " + String.valueOf(this.totalPoints));
+        int totalPoints = preferences.getInt("totalPoints", 0);
+        totalPoints += points;
+        pointsTextView.setText("Bodovi: " + String.valueOf(totalPoints)); // Update pointsTextView with the total points
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("totalPoints", this.totalPoints);
+        editor.putInt("totalPoints", totalPoints);
         editor.apply();
     }
 //Metoda getTotalPoints() vraća ukupan broj bodova koji je korisnik osvojio.
@@ -298,6 +293,16 @@ public class Game4Activity extends AppCompatActivity {
         editor.putInt("totalPoints", 0);
         editor.apply();
     }
-
+    private void endGame() {
+        String points = String.valueOf(getTotalPoints());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Points");
+        builder.setMessage("Kraj igre, ukupno imate " + points + " bodova!");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            // Handle the OK button click if needed
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
 }

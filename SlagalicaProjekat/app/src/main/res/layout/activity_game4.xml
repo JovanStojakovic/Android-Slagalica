@@ -65,7 +65,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Konacno resenje"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+        android:inputType="text"
+        android:imeOptions="actionDone" />
+
     <TextView
         android:id="@+id/tajmer"
         android:layout_width="match_parent"

@@ -50,7 +50,7 @@ public class Game5Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Game5Activity.this, MyProfileActivity.class));
+                startActivity(new Intent(Game5Activity.this, Game3Activity.class));
             }
         });
 

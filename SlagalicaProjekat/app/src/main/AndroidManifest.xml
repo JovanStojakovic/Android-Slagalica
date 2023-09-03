@@ -37,9 +37,6 @@
             android:name=".Game2Activity"
             android:exported="false" />
         <activity
-            android:name=".Game1Activity"
-            android:exported="false" />
-        <activity
             android:name=".LogUserActivity"
             android:exported="false" />
         <activity

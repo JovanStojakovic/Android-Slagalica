@@ -28,14 +28,14 @@ public class LogUserActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LogUserActivity.this,Game1Activity.class));
+                startActivity(new Intent(LogUserActivity.this,Game4Activity.class));
             }
         });
         Button btn3 = findViewById(R.id.playFriend);
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LogUserActivity.this,Game1Activity.class));
+                startActivity(new Intent(LogUserActivity.this,Game4Activity.class));
             }
         });
 
