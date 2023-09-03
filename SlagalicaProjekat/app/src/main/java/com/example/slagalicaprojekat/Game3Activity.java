@@ -49,7 +49,7 @@ public class Game3Activity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
 
-        // Get a reference to the Firebase Realtime Database
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
         selectedObjects = new ArrayList<>();
 
@@ -79,19 +79,15 @@ public class Game3Activity extends AppCompatActivity {
     }
 
     private void readDataFromFirebase() {
-        // Assuming your data is stored under the "objects" node in your Firebase database
         DatabaseReference objectsRef = databaseReference.child("KoZnaZna");
 
-        // Attach a listener to retrieve the data once
         objectsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     List<KoZnaZna> objectList = new ArrayList<>();
 
-                    // Iterate through the children of the "objects" node
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        // Get the data for each child and convert it to ObjectModel
                         KoZnaZna object = snapshot.getValue(KoZnaZna.class);
                         if (object != null) {
                             objectList.add(object);
@@ -106,7 +102,6 @@ public class Game3Activity extends AppCompatActivity {
                     while (selectedObjects.size() < 5) {
                         int randomIndex = random.nextInt(objectList.size());
 
-                        // Check if the index has already been used
                         if (!usedIndices.contains(randomIndex)) {
                             selectedObjects.add(objectList.get(randomIndex));
                             usedIndices.add(randomIndex);

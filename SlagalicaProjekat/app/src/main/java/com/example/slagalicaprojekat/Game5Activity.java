@@ -50,7 +50,7 @@ public class Game5Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Game5Activity.this, Game3Activity.class));
+                startActivity(new Intent(Game5Activity.this, Game4Activity.class));
             }
         });
 
@@ -141,26 +141,21 @@ public class Game5Activity extends AppCompatActivity {
 
 
     private void readDataFromFirebase() {
-        // Assuming your data is stored under the "objects" node in your Firebase database
         DatabaseReference objectsRef = databaseReference.child("Asocijacije");
 
-        // Attach a listener to retrieve the data once
         objectsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     List<Asocijacije> objectList = new ArrayList<>();
 
-                    // Iterate through the children of the "objects" node
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        // Get the data for each child and convert it to ObjectModel
                         Asocijacije object = snapshot.getValue(Asocijacije.class);
                         if (object != null) {
                             objectList.add(object);
                         }
                     }
 
-                    // Choose a random object from the list
                     Random random = new Random();
                     int randomIndex = random.nextInt(objectList.size());
                     selectedObject = objectList.get(randomIndex);

@@ -48,12 +48,13 @@ public class Game4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game4);
+        resetPoints();
 
         Button btn = findViewById(R.id.btnConfirm);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Game4Activity.this,Game5Activity.class));
+                startActivity(new Intent(Game4Activity.this,MyProfileActivity.class));
             }
         });
 
@@ -259,7 +260,7 @@ public class Game4Activity extends AppCompatActivity {
 
         savePoints(points);
         int totalPoints = getTotalPoints();
-        endGame();
+        //endGame();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Bodovi");
         builder.setMessage("Osvojili ste " + points + " bodova!");
@@ -293,7 +294,7 @@ public class Game4Activity extends AppCompatActivity {
         editor.putInt("totalPoints", 0);
         editor.apply();
     }
-    private void endGame() {
+    /*private void endGame() {
         String points = String.valueOf(getTotalPoints());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Points");
@@ -303,6 +304,6 @@ public class Game4Activity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
+    }*/
 
 }
