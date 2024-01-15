@@ -1,4 +1,4 @@
-package com.example.slagalicaprojekat;
+package com.example.slagalicaprojekat.Model;
 
 public class Asocijacije {
     private String a1;

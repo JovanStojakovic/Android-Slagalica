@@ -1,105 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/plava"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <!-- Question Text View -->
-
-    <!-- Answer Buttons Container -->
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    tools:context=".Activities.Game3Activity">
 
     <TextView
-        android:id="@+id/question"
-        android:layout_width="match_parent"
+        android:id="@+id/timerTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="444dp"
-        android:text="Koji je glavni grad Francuske?"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nextGame"
-        tools:layout_editor_absoluteX="26dp" />
-
-    <Button
-        android:id="@+id/answer1"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="436dp"
-        android:text="Beograd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/answer2"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="436dp"
-
-        android:text="Paris"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.152"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/answer3"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:text="Barcelona"
-        app:layout_constraintBottom_toTopOf="@+id/answer1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.921"
-        app:layout_constraintStart_toEndOf="@+id/answer4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/answer4"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="25dp"
-        android:text="Madrid"
-        app:layout_constraintBottom_toTopOf="@+id/answer2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.152"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        android:text="Vreme: 5s"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
     <TextView
-        android:id="@+id/timer"
-        android:layout_width="match_parent"
+        android:id="@+id/questionTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Preostalo vreme : 7 "
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Pitanje o opstem znanju?"
+        android:textSize="18sp"
+        android:layout_below="@id/timerTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"/>
 
     <Button
-        android:id="@+id/btn_nextGame"
+        android:id="@+id/answer1Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
-        android:text="Sledeca igra"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.875"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Odgovor 1"
+        android:layout_below="@id/questionTextView"
+        android:layout_marginTop="16dp"
+        android:onClick="onAnswerButtonClick"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/answer2Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Odgovor 2"
+        android:layout_below="@id/answer1Button"
+        android:layout_marginTop="16dp"
+        android:onClick="onAnswerButtonClick"/>
+
+    <Button
+        android:id="@+id/answer3Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Odgovor 3"
+        android:layout_below="@id/answer2Button"
+        android:layout_marginTop="16dp"
+        android:onClick="onAnswerButtonClick"/>
+
+    <Button
+        android:id="@+id/answer4Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Odgovor 4"
+        android:layout_below="@id/answer3Button"
+        android:layout_marginTop="16dp"
+        android:onClick="onAnswerButtonClick"/>
+
+</RelativeLayout>

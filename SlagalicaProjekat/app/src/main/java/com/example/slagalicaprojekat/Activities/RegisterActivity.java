@@ -1,4 +1,4 @@
-package com.example.slagalicaprojekat;
+package com.example.slagalicaprojekat.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.slagalicaprojekat.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity {
                             else{
                                 //dodaj podatke u bazu
                                 databaseReference.child("users").child(usernameTxt).child("email").setValue(emailTxt);
+                                databaseReference.child("users").child(usernameTxt).child("username").setValue(usernameTxt);
+
                                 databaseReference.child("users").child(usernameTxt).child("password").setValue(passwordTxt);
 
                                 Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();

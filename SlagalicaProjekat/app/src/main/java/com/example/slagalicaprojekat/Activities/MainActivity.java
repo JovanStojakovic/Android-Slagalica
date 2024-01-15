@@ -1,4 +1,4 @@
-package com.example.slagalicaprojekat;
+package com.example.slagalicaprojekat.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
+import com.example.slagalicaprojekat.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,Game5Activity.class));
+                startActivity(new Intent(MainActivity.this, Game3Activity.class));
             }
         });
 

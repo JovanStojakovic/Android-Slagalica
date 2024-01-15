@@ -1,14 +1,29 @@
-package com.example.slagalicaprojekat;
+package com.example.slagalicaprojekat.Model;
 
 public class KorakPoKorak {
-    private String korak1;
-    private String korak2;
-    private String korak3;
-    private String korak4;
-    private String korak5;
-    private String korak6;
-    private String korak7;
-    private String resenje;
+
+    String korak1;
+    String korak2;
+    String korak3;
+    String korak4;
+    String korak5;
+    String korak6;
+    String korak7;
+    String resenje;
+
+    public KorakPoKorak() {
+    }
+
+    public KorakPoKorak(String korak1, String korak2, String korak3, String korak4, String korak5, String korak6, String korak7, String resenje) {
+        this.korak1 = korak1;
+        this.korak2 = korak2;
+        this.korak3 = korak3;
+        this.korak4 = korak4;
+        this.korak5 = korak5;
+        this.korak6 = korak6;
+        this.korak7 = korak7;
+        this.resenje = resenje;
+    }
 
     public String getKorak1() {
         return korak1;
@@ -71,20 +86,6 @@ public class KorakPoKorak {
     }
 
     public void setResenje(String resenje) {
-        this.resenje = resenje;
-    }
-
-    public KorakPoKorak(){
-
-    }
-    public KorakPoKorak(String korak1, String korak2, String korak3, String korak4, String korak5, String korak6, String korak7, String resenje) {
-        this.korak1 = korak1;
-        this.korak2 = korak2;
-        this.korak3 = korak3;
-        this.korak4 = korak4;
-        this.korak5 = korak5;
-        this.korak6 = korak6;
-        this.korak7 = korak7;
         this.resenje = resenje;
     }
 }
