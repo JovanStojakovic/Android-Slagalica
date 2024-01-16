@@ -55,11 +55,18 @@ public class LoginActivity extends AppCompatActivity {
                                 final String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
                                 if(getPassword.equals(passwordTxt)){
                                     final String email = snapshot.child(usernameTxt).child("email").getValue(String.class);
+                                    final Long zvezdeLong = snapshot.child(usernameTxt).child("zvezde").getValue(Long.class);
+                                    final Long tokeniLong = snapshot.child(usernameTxt).child("tokeni").getValue(Long.class);
+                                    int zvezde = (zvezdeLong != null) ? zvezdeLong.intValue() : 0;
+                                    int tokeni = (tokeniLong != null) ? tokeniLong.intValue() : 0;
+
                                     //kad je uspesno logovanje sacuvaj te podatke o prijavljenom korisniku
                                     SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("username", usernameTxt); //sacuvaj username
                                     editor.putString("email", email); //sacuvaj email
+                                    editor.putString("zvezde", String.valueOf(zvezde));
+                                    editor.putString("tokeni", String.valueOf(tokeni));
                                     editor.apply();
 
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();

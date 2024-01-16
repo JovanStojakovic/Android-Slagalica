@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -206,18 +207,28 @@ public class Game6Activity extends AppCompatActivity {
         bodoviZaOdgovor = 0;
     }
 
-
-
     private void showResultDialog(boolean isCorrect) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(isCorrect ? "Tačno!" : "Netačno!");
 
         if (isCorrect) {
             builder.setMessage("Čestitamo! Osvojili ste " + bodoviZaOdgovor + " bodova u ovoj igri. " +
-                    "Ukupno osvojeni bodovi do sada: " + (score + bodoviZaOdgovor) + " bodova!");
+                    "Ukupno osvojenih bodova: " + (score + bodoviZaOdgovor) + " boda!");
+            builder.setPositiveButton("Kraj", ((dialog, which) -> {
+                Intent intent = new Intent(Game6Activity.this, KrajIgreActivity.class);
+                intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
+                startActivity(intent);
+                finish();
+            }));
         } else {
             builder.setMessage("Nažalost, niste tačno odgovorili." + "\n" +
-                    "Ukupno osvojeni bodovi do sada: " + score + " bodova.");
+                    "Ukupno osvojenih bodova: " + score + " boda!");
+            builder.setPositiveButton("Kraj", ((dialog, which) -> {
+                Intent intent = new Intent(Game6Activity.this,KrajIgreActivity.class);
+                intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
+                startActivity(intent);
+                finish();
+            }));
         }
 
         AlertDialog dialog = builder.create();
@@ -226,5 +237,39 @@ public class Game6Activity extends AppCompatActivity {
 
     public void deleteButtonClicked(View view) {
         ((TextView) findViewById(R.id.expressionTextView)).setText("");
+    }
+
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izlaz iz igre");
+        builder.setMessage("Da li ste sigurni da želite da izađete iz igre? Svi dosadašnji bodovi će biti izgubljeni.");
+
+        builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        // Postavljanje da dijalog nije otkaziv (tj. da korisnik ne može kliknuti izvan dijaloga ili pritisnuti Back dugme)
+        builder.setCancelable(false);
+
+        // Kreiranje dijaloga
+        AlertDialog exitDialog = builder.create();
+
+        // Prikazivanje dijaloga
+        exitDialog.show();
     }
 }

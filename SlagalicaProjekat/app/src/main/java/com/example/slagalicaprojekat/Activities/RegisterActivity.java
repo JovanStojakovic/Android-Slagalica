@@ -66,8 +66,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 //dodaj podatke u bazu
                                 databaseReference.child("users").child(usernameTxt).child("email").setValue(emailTxt);
                                 databaseReference.child("users").child(usernameTxt).child("username").setValue(usernameTxt);
-
                                 databaseReference.child("users").child(usernameTxt).child("password").setValue(passwordTxt);
+                                databaseReference.child("users").child(usernameTxt).child("tokeni").setValue(5);
+                                databaseReference.child("users").child(usernameTxt).child("zvezde").setValue(0);
 
                                 Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                                 finish();

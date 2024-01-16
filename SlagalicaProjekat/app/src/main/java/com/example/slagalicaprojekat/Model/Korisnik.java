@@ -4,15 +4,18 @@ public class Korisnik {
     private String username;
     private String email;
     private String password;
+    private int tokeni;
+    private int zvezde;
 
     public Korisnik() {
     }
 
-    public Korisnik( String username, String email, String password) {
-
-        this.password = password;
+    public Korisnik(String username, String email, String password, int tokeni, int zvezde) {
         this.username = username;
         this.email = email;
+        this.password = password;
+        this.tokeni = tokeni;
+        this.zvezde = zvezde;
     }
 
     public String getEmail() {
@@ -37,5 +40,21 @@ public class Korisnik {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getTokeni() {
+        return tokeni;
+    }
+
+    public void setTokeni(int tokeni) {
+        this.tokeni = tokeni;
+    }
+
+    public int getZvezde() {
+        return zvezde;
+    }
+
+    public void setZvezde(int zvezde) {
+        this.zvezde = zvezde;
     }
 }

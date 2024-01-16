@@ -7,6 +7,28 @@
     tools:context=".Activities.LogUserActivity"
     android:background="@drawable/plava">
 
+    <TextView
+        android:id="@+id/tokeni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tokeni"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/zvezde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zvezde"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"/>
+
     <Button
         android:id="@+id/profile"
         android:layout_width="wrap_content"
@@ -14,7 +36,7 @@
         android:layout_marginTop="140dp"
         android:text="Profil"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/play"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,30 +55,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.384" />
 
-    <Button
-        android:id="@+id/playFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="280dp"
-        android:text="Igraj sa prijateljem"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_play"
-        app:layout_constraintVertical_bias="0.198" />
+    <!--    <Button-->
+    <!--        android:id="@+id/playFriend"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginBottom="280dp"-->
+    <!--        android:text="Igraj sa prijateljem"-->
+    <!--        android:textSize="30dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.494"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/btn_play"-->
+    <!--        app:layout_constraintVertical_bias="0.198" />-->
 
-    <EditText
-        android:id="@+id/gameRequest"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginBottom="164dp"
-        android:hint="Player Username:"
-        android:inputType="text"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playWithFriendsButton"
-        tools:layout_editor_absoluteX="32dp" />
+    <!--    <EditText-->
+    <!--        android:id="@+id/gameRequest"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="55dp"-->
+    <!--        android:layout_marginBottom="164dp"-->
+    <!--        android:hint="Player Username:"-->
+    <!--        android:inputType="text"-->
+    <!--        android:textAlignment="center"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/playFriend"-->
+    <!--        tools:layout_editor_absoluteX="32dp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

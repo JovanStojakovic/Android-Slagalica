@@ -23,15 +23,16 @@ public class MyProfileActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
         String email = sharedPreferences.getString("email", "");
-
+        String zvezde = sharedPreferences.getString("zvezde", "");
 
         // Prikazi email i username
         TextView usernameTextView = findViewById(R.id.tv_name);
         TextView emailTextView = findViewById(R.id.tv_email);
+        TextView zvezdeTextView = findViewById(R.id.tv_stars);
 
         usernameTextView.setText("Username: " + username);
         emailTextView.setText("Email: " + email);
-
+        zvezdeTextView.setText("Zvezde: " + zvezde);
 
 
         Button btn1 = findViewById(R.id.pocetna_strana);
@@ -50,6 +51,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.remove("username");
                 editor.remove("email");
+                editor.remove("zvezde");
                 editor.apply();
                 startActivity(new Intent(MyProfileActivity.this, LoginActivity.class));
                 finish();
