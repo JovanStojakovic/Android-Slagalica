@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class LogUserActivity extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://slagalica-3c783-default-rtdb.firebaseio.com/");
 
-    private Button playButton;
+    private Button playButton, rangListButton;
 
     private String loggedInUsername = ""; // Track logged-in user
 
@@ -32,8 +32,8 @@ public class LogUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_user);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
-        String zvezde = sharedPreferences.getString("zvezde", "");
-        String tokeni = sharedPreferences.getString("tokeni", "");
+        int zvezde = sharedPreferences.getInt("zvezde", 0);
+        int tokeni = sharedPreferences.getInt("tokeni", 0);
 
         TextView zvezdeTextView = findViewById(R.id.zvezde);
         TextView tokeniTextView = findViewById(R.id.tokeni);
@@ -60,11 +60,21 @@ public class LogUserActivity extends AppCompatActivity {
                 }
             }
         });
+
+        rangListButton = findViewById(R.id.btn_rang_list);
+        rangListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LogUserActivity.this, RangListaActivity.class));
+            }
+        });
+
     }
 
     private boolean checkAndConsumeToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
-        int currentTokens = Integer.parseInt(sharedPreferences.getString("tokeni", ""));
+        int currentTokens = sharedPreferences.getInt("tokeni", 0);
+        int currentZvezde = sharedPreferences.getInt("zvezde", 0);
         String usernameTxt = sharedPreferences.getString("username", "");
 
         if (currentTokens > 0) {
@@ -72,11 +82,15 @@ public class LogUserActivity extends AppCompatActivity {
             currentTokens--;
             databaseReference.child("users").child(usernameTxt).child("tokeni").setValue(currentTokens);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("tokeni", String.valueOf(currentTokens));
+            editor.putInt("tokeni", currentTokens);
+            editor.putInt("zvezde", currentZvezde);
             editor.apply();
 
             TextView tokeniTextView = findViewById(R.id.tokeni);
             tokeniTextView.setText("Tokeni: " + currentTokens);
+
+            TextView zvezdeTextView = findViewById(R.id.zvezde);
+            zvezdeTextView.setText("Zvezde: " + currentZvezde);
 
             return true;
         } else {

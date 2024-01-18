@@ -6,16 +6,25 @@ public class Korisnik {
     private String password;
     private int tokeni;
     private int zvezde;
+    private int odigranePartije;
 
     public Korisnik() {
     }
 
-    public Korisnik(String username, String email, String password, int tokeni, int zvezde) {
+    public Korisnik(String username, int zvezde, int odigranePartije, String email) {
+        this.username = username;
+        this.zvezde = zvezde;
+        this.odigranePartije = odigranePartije;
+        this.email = email;
+    }
+
+    public Korisnik(String username, String email, String password, int tokeni, int zvezde, int odigranePartije) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.tokeni = tokeni;
         this.zvezde = zvezde;
+        this.odigranePartije = odigranePartije;
     }
 
     public String getEmail() {
@@ -56,5 +65,18 @@ public class Korisnik {
 
     public void setZvezde(int zvezde) {
         this.zvezde = zvezde;
+    }
+
+    public int getOdigranePartije() {
+        return odigranePartije;
+    }
+
+    public void setOdigranePartije(int odigranePartije) {
+        this.odigranePartije = odigranePartije;
+    }
+
+    @Override
+    public String toString() {
+        return "Username: " + username + ", Zvezde: " + zvezde;
     }
 }

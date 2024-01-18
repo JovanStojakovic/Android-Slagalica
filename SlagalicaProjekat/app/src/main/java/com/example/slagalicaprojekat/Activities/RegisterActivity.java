@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 databaseReference.child("users").child(usernameTxt).child("password").setValue(passwordTxt);
                                 databaseReference.child("users").child(usernameTxt).child("tokeni").setValue(5);
                                 databaseReference.child("users").child(usernameTxt).child("zvezde").setValue(0);
+                                databaseReference.child("users").child(usernameTxt).child("odigranePartije").setValue(0);
 
                                 Toast.makeText(RegisterActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                                 finish();

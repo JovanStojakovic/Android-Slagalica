@@ -1,5 +1,6 @@
 package com.example.slagalicaprojekat.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,8 +38,9 @@ public class Game4Activity extends AppCompatActivity {
     private boolean gamePaused = false;
     private KorakPoKorak currentRound;
     private int currentStep;
-    private int score = 0;
+    private int score;
     private int bodoviZaOdgovor = 0;
+    private int bodoviIzKoZnaZna;
     private CountDownTimer timer;
     private DatabaseReference databaseReference;
     private List<KorakPoKorak> koraciList = new ArrayList<>();
@@ -72,7 +74,7 @@ public class Game4Activity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("ukupno-osvojeni-bodovi")) {
-            int bodoviIzKoZnaZna = intent.getIntExtra("ukupno-osvojeni-bodovi", 0);
+            bodoviIzKoZnaZna = intent.getIntExtra("ukupno-osvojeni-bodovi", 0);
             score += bodoviIzKoZnaZna;
         }
 
@@ -195,7 +197,6 @@ public class Game4Activity extends AppCompatActivity {
     private void moveToNextStep() {
         // Povećavanje trenutnog koraka
         currentStep++;
-        score = 0;
 
         if (currentStep > 7) {
             // Ako je trenutni korak 7, prikaži pauseGame
@@ -258,6 +259,8 @@ public class Game4Activity extends AppCompatActivity {
                 "Ukupno osvojeni bodovi do sada: " + score + " bodova.");
         builder.setPositiveButton("Nastavi na sledeću igru", (dialog, which) -> {
             Intent intent = new Intent(Game4Activity.this, Game6Activity.class);
+            intent.putExtra("igra1", bodoviIzKoZnaZna);
+            intent.putExtra("igra2", bodoviZaOdgovor);
             intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
             startActivity(intent);
             finish();
@@ -315,5 +318,39 @@ public class Game4Activity extends AppCompatActivity {
         Intent intent = new Intent(this, Game6Activity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izlaz iz igre");
+        builder.setMessage("Da li ste sigurni da želite da izađete iz igre? Svi dosadašnji bodovi će biti izgubljeni.");
+
+        builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        // Postavljanje da dijalog nije otkaziv (tj. da korisnik ne može kliknuti izvan dijaloga ili pritisnuti Back dugme)
+        builder.setCancelable(false);
+
+        // Kreiranje dijaloga
+        AlertDialog exitDialog = builder.create();
+
+        // Prikazivanje dijaloga
+        exitDialog.show();
     }
 }

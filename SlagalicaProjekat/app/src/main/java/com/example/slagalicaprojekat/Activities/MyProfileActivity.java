@@ -18,28 +18,29 @@ public class MyProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
 
-
-
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
         String email = sharedPreferences.getString("email", "");
-        String zvezde = sharedPreferences.getString("zvezde", "");
+        int zvezde = sharedPreferences.getInt("zvezde", 0);
+        int odigranePartije = sharedPreferences.getInt("odigranePartije", 0);
 
         // Prikazi email i username
         TextView usernameTextView = findViewById(R.id.tv_name);
         TextView emailTextView = findViewById(R.id.tv_email);
         TextView zvezdeTextView = findViewById(R.id.tv_stars);
+        TextView odigranePartijeTextView = findViewById(R.id.odigranePartijeTextView);
 
         usernameTextView.setText("Username: " + username);
         emailTextView.setText("Email: " + email);
         zvezdeTextView.setText("Zvezde: " + zvezde);
+        odigranePartijeTextView.setText("Broj odigranih partija: " + odigranePartije);
 
 
         Button btn1 = findViewById(R.id.pocetna_strana);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MyProfileActivity.this,LogUserActivity.class));
+                startActivity(new Intent(MyProfileActivity.this, LogUserActivity.class));
             }
         });
         Button logoutButton = findViewById(R.id.odjava);
@@ -52,10 +53,12 @@ public class MyProfileActivity extends AppCompatActivity {
                 editor.remove("username");
                 editor.remove("email");
                 editor.remove("zvezde");
+                editor.remove("odigranePartije");
                 editor.apply();
                 startActivity(new Intent(MyProfileActivity.this, LoginActivity.class));
                 finish();
             }
         });
+
     }
 }

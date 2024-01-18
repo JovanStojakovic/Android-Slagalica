@@ -35,6 +35,8 @@ public class Game6Activity extends AppCompatActivity {
     private int stopButtonClickCount = 0;
     private int score = 0;
     private int bodoviZaOdgovor = 0;
+    private int bodoviZaKoZnaZna;
+    private int bodoviZaKorakPoKorak;
     private Button stopButton;
 
     @Override
@@ -82,7 +84,9 @@ public class Game6Activity extends AppCompatActivity {
 
         score = 0;
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("ukupno-osvojeni-bodovi")) {
+        if (intent != null && intent.hasExtra("ukupno-osvojeni-bodovi") && intent.hasExtra("igra1") && intent.hasExtra("igra2")) {
+            bodoviZaKoZnaZna = intent.getIntExtra("igra1", 0);
+            bodoviZaKorakPoKorak = intent.getIntExtra("igra2", 0);
             int ukupnoBodova = intent.getIntExtra("ukupno-osvojeni-bodovi", 0);
             score += ukupnoBodova;
         }
@@ -203,8 +207,6 @@ public class Game6Activity extends AppCompatActivity {
 
         score += bodoviZaOdgovor;
 
-        // Reset bodoviZaOdgovor for the next round
-        bodoviZaOdgovor = 0;
     }
 
     private void showResultDialog(boolean isCorrect) {
@@ -216,6 +218,9 @@ public class Game6Activity extends AppCompatActivity {
                     "Ukupno osvojenih bodova: " + (score + bodoviZaOdgovor) + " boda!");
             builder.setPositiveButton("Kraj", ((dialog, which) -> {
                 Intent intent = new Intent(Game6Activity.this, KrajIgreActivity.class);
+                intent.putExtra("igra1", bodoviZaKoZnaZna);
+                intent.putExtra("igra2", bodoviZaKorakPoKorak);
+                intent.putExtra("igra3", bodoviZaOdgovor);
                 intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
                 startActivity(intent);
                 finish();
@@ -224,7 +229,7 @@ public class Game6Activity extends AppCompatActivity {
             builder.setMessage("Nažalost, niste tačno odgovorili." + "\n" +
                     "Ukupno osvojenih bodova: " + score + " boda!");
             builder.setPositiveButton("Kraj", ((dialog, which) -> {
-                Intent intent = new Intent(Game6Activity.this,KrajIgreActivity.class);
+                Intent intent = new Intent(Game6Activity.this, KrajIgreActivity.class);
                 intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
                 startActivity(intent);
                 finish();

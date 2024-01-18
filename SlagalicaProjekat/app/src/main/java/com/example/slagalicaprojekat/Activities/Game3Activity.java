@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -30,7 +31,6 @@ public class Game3Activity extends AppCompatActivity {
     private Button answer1Button, answer2Button, answer3Button, answer4Button;
     private int currentQuestionIndex = 0;
     private int playerScore = 0;
-    private int score = 0;
     private CountDownTimer timer;
 
     private DatabaseReference databaseReference;
@@ -66,6 +66,7 @@ public class Game3Activity extends AppCompatActivity {
         };
 
         fetchQuestionsFromFirebase();
+
     }
 
     private void fetchQuestionsFromFirebase() {
@@ -170,17 +171,52 @@ public class Game3Activity extends AppCompatActivity {
         builder.setTitle("Kraj igre");
 
         builder.setMessage("Osvojili ste " + playerScore + " bodova u ovoj igri. " +
-                "Ukupno osvojeni bodovi do sada: " + (score + playerScore) + " bodova!");
+                "Ukupno osvojeni bodovi do sada: " + playerScore + " bodova!");
 
         builder.setPositiveButton("Sledeća igra", (dialog, which) -> {
             Intent intent = new Intent(Game3Activity.this, Game4Activity.class);
-            intent.putExtra("ukupno-osvojeni-bodovi", score + playerScore); // Accumulate the scores
+            intent.putExtra("igra1", playerScore);
+            intent.putExtra("ukupno-osvojeni-bodovi", playerScore); // Accumulate the scores
             startActivity(intent);
             finish();
         });
 
         builder.setCancelable(false);
         builder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
+    private void showExitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Izlaz iz igre");
+        builder.setMessage("Da li ste sigurni da želite da izađete iz igre? Svi dosadašnji bodovi će biti izgubljeni.");
+
+        builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        // Postavljanje da dijalog nije otkaziv (tj. da korisnik ne može kliknuti izvan dijaloga ili pritisnuti Back dugme)
+        builder.setCancelable(false);
+
+        // Kreiranje dijaloga
+        AlertDialog exitDialog = builder.create();
+
+        // Prikazivanje dijaloga
+        exitDialog.show();
     }
 
 }
