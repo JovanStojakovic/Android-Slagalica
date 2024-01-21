@@ -62,13 +62,38 @@ public class KrajIgreActivity extends AppCompatActivity {
             databaseReference.child("users").child(usernameTxt).child("odigranePartije").setValue(odigranePartije);
         }
 
-        finalScore.setText("Ukupno ste osvojili: " + score + " bodova\nUkupan broj zvezdi: " + stars + "\n");
-        finalScore.append("U igri 'Ko zna zna' ste ostvarili: " + bodoviZaKoZnaZna + " od 50 bodova!\n");
-        finalScore.append("U igri 'Korak po korak' ste ostvarili: " + bodoviZaKorakPoKorak + " od 20 bodova!\n");
-        finalScore.append("U igri 'Moj broj' ste ostvarili: " + bodoviZaMojBroj + " od 20 bodova!");
+        if (isUserLoggedIn()) {
+            finalScore.setText("Ukupno ste osvojili: " + score + " bodova\n");
+            finalScore.append("U igri 'Ko zna zna' ste ostvarili: " + bodoviZaKoZnaZna + " od 50 bodova!\n");
+            finalScore.append("U igri 'Korak po korak' ste ostvarili: " + bodoviZaKorakPoKorak + " od 20 bodova!\n");
+            finalScore.append("U igri 'Moj broj' ste ostvarili: " + bodoviZaMojBroj + " od 20 bodova!\n");
+            finalScore.append("Ukupan broj zvezdi: " + stars );
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("odigranePartije", odigranePartije);
+            editor.putInt("zvezde", stars);
+
+            // Dodavanje tokena svakih 50 zvezda
+            int prethodneZvezde = sharedPreferences.getInt("prethodneZvezde", 0);
+            if ((stars / 50) > (prethodneZvezde / 50)) {
+                tokens++; // Dodajte jedan token
+                editor.putInt("tokeni", tokens);
+                databaseReference.child("users").child(usernameTxt).child("tokeni").setValue(tokens);
+            }
+
+            // Ažuriranje vrednosti u Firebase bazi podataka
+            databaseReference.child("users").child(usernameTxt).child("zvezde").setValue(stars);
+            databaseReference.child("users").child(usernameTxt).child("odigranePartije").setValue(odigranePartije);
+            editor.putInt("prethodneZvezde", stars); // Čuvanje vrednosti zvezda za sledeću proveru
+            editor.apply();
+        } else {
+            // Ako korisnik nije ulogovan, prikaži samo ukupne bodove
+            finalScore.setText("Niste prijavljeni.\n Ukupno ste osvojili: " + score + " bodova\n");
+        }
 
         Button krajButton = findViewById(R.id.krajButton);
 
+        // Prikazi odgovarajuci ekran zavisno od toga da li je korisnik ulogovan
         if (isUserLoggedIn()) {
             krajButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,24 +111,6 @@ public class KrajIgreActivity extends AppCompatActivity {
                 }
             });
         }
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("odigranePartije", odigranePartije);
-        editor.putInt("zvezde", stars);
-
-        // Dodavanje tokena svakih 50 zvezda
-        int prethodneZvezde = sharedPreferences.getInt("prethodneZvezde", 0);
-        if ((stars / 50) > (prethodneZvezde / 50)) {
-            tokens++; // Dodajte jedan token
-            editor.putInt("tokeni", tokens);
-            databaseReference.child("users").child(usernameTxt).child("tokeni").setValue(tokens);
-        }
-
-        // Ažuriranje vrednosti u Firebase bazi podataka
-        databaseReference.child("users").child(usernameTxt).child("zvezde").setValue(stars);
-        databaseReference.child("users").child(usernameTxt).child("odigranePartije").setValue(odigranePartije);
-        editor.putInt("prethodneZvezde", stars); // Čuvanje vrednosti zvezda za sledeću proveru
-        editor.apply();
 
     }
 

@@ -110,14 +110,14 @@ public class Game3Activity extends AppCompatActivity {
     }
 
     private void checkAnswer(String selectedAnswer) {
-        timer.cancel(); // Zaustavite tajmer jer je korisnik odgovorio
+        timer.cancel(); // Zaustavi tajmer jer je korisnik odgovorio
 
         // Provera da li lista ima barem jedan element
         if (!questionsList.isEmpty() && currentQuestionIndex < questionsList.size()) {
             KoZnaZna currentQuestion = questionsList.get(currentQuestionIndex);
             String correctAnswer = currentQuestion.getResenje();
 
-            // Provjeri odgovor
+            // Proveri odgovor
             if (correctAnswer.equals(selectedAnswer)) {
                 playerScore += 10;
             } else {
@@ -125,12 +125,12 @@ public class Game3Activity extends AppCompatActivity {
                 playerScore -= 5;
             }
 
-            // Uklonite odgovoreno pitanje iz liste
+            // Ukloni odgovoreno pitanje iz liste
             questionsList.remove(currentQuestion);
 
             nextQuestion();
         } else {
-            // Dodajte logiku za situaciju kada nema više pitanja
+
             endGame();
         }
     }
@@ -143,7 +143,7 @@ public class Game3Activity extends AppCompatActivity {
         }
     }
 
-    //PITANJA NE IDU RANDOM JE SE SJEBU BODOVI
+
     private void showQuestion() {
         if (!questionsList.isEmpty() && currentQuestionIndex < questionsList.size()) {
             // Uzmi pitanje na osnovu trenutnog indeksa

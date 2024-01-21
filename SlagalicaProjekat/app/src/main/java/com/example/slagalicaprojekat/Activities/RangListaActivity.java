@@ -69,7 +69,7 @@ public class RangListaActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle an error if needed
+
             }
         });
     }

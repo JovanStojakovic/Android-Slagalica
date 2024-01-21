@@ -261,7 +261,7 @@ public class Game4Activity extends AppCompatActivity {
             Intent intent = new Intent(Game4Activity.this, Game6Activity.class);
             intent.putExtra("igra1", bodoviIzKoZnaZna);
             intent.putExtra("igra2", bodoviZaOdgovor);
-            intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
+            intent.putExtra("ukupno-osvojeni-bodovi", score );
             startActivity(intent);
             finish();
         });
@@ -277,19 +277,17 @@ public class Game4Activity extends AppCompatActivity {
         // Resetovanje polja i početak nove igre
         if (!koraciList.isEmpty() && currentStep < koraciList.size()) {
             currentRound = koraciList.get(currentStep);
-            // Ako postoji aktivni tajmer, prekini ga pre nego što ažurirate korak i pokrenete novi tajmer
+            // Ako postoji aktivni tajmer, prekini ga pre nego što ažurira korak i pokrenene novi tajmer
             if (timer != null) {
                 timer.cancel();
             }
-            // Dodajte poziv startTimer() ovde nakon što se završi dijalog
+            // Dodaj poziv startTimer() ovde nakon što se završi dijalog
             updateStep();  // Prikazivanje novog koraka
         } else {
-            // Logika kada nema više koraka iz baze ili se premašuje broj koraka
-            // Ovde možete dodati dodatne provere ili poruke po potrebi
             endGame();
         }
 
-        // Ostatak koda za resetovanje i početak nove igre
+        // Ostatak za resetovanje i početak nove igre
         currentStep = 1;
         score = 0;
         answerEditText.setText("");
@@ -298,10 +296,7 @@ public class Game4Activity extends AppCompatActivity {
     }
 
     private void endGame() {
-        // Logika koja se izvršava na kraju igre
-        // Ovde možete prikazati rezultat, sačuvati bodove, itd.
 
-        // Primer prikaza rezultata
         timerView.setText("");
         answerButton.setEnabled(false);
     }

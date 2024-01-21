@@ -140,23 +140,23 @@ public class Game6Activity extends AppCompatActivity {
             // Postavi ciljni broj u TextView
             targetNumberTextView.setText("Traženi broj: " + currentBroj.getResult());
 
-            // Increment the stopButtonClickCount
+
             stopButtonClickCount++;
 
-            // If the button is clicked for the second time, make the number buttons visible
+            // Ako se dugme pritisne po drugi put, učini brojna dugmad vidljivim
             if (stopButtonClickCount == 2) {
                 setNumberButtonsVisibility(View.VISIBLE, currentBroj);
-                // Reset the click count for future use
+                // Resetuj brojač klikova za buduću upotrebu.
                 stopButtonClickCount = 0;
                 stopButton.setVisibility(View.INVISIBLE);
             } else {
-                // If it's the first click, set the buttons invisible
+                //Ako je pritisnut prvi put, postavi dugmad kao nevidljiva
                 setNumberButtonsVisibility(View.INVISIBLE, currentBroj);
             }
 
         } else {
             Log.d("MojBrojActivity", "stopButtonClicked: CurrentBroj is null");
-            // Dodajte odgovarajuću logiku ili poruku ako currentBroj nije postavljen
+
         }
     }
 
@@ -177,7 +177,7 @@ public class Game6Activity extends AppCompatActivity {
     public void confirmButtonClicked(View view) {
         String currentExpression = ((TextView) findViewById(R.id.expressionTextView)).getText().toString();
 
-        // Koristi Rhino za evaluaciju izraza
+        // Koristim Rhino za evaluaciju izraza
         Context rhino = Context.enter();
         rhino.setOptimizationLevel(-1); // Isključuje optimizaciju za bolju kompatibilnost
         Scriptable scope = rhino.initStandardObjects();
@@ -230,6 +230,9 @@ public class Game6Activity extends AppCompatActivity {
                     "Ukupno osvojenih bodova: " + score + " boda!");
             builder.setPositiveButton("Kraj", ((dialog, which) -> {
                 Intent intent = new Intent(Game6Activity.this, KrajIgreActivity.class);
+                intent.putExtra("igra1", bodoviZaKoZnaZna);
+                intent.putExtra("igra2", bodoviZaKorakPoKorak);
+                intent.putExtra("igra3", bodoviZaOdgovor);
                 intent.putExtra("ukupno-osvojeni-bodovi", score ); // Ovde dodajte bodove
                 startActivity(intent);
                 finish();

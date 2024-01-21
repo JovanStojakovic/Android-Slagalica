@@ -8,22 +8,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.slagalicaprojekat.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LogUserActivity extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://slagalica-3c783-default-rtdb.firebaseio.com/");
-
     private Button playButton, rangListButton;
-
     private String loggedInUsername = ""; // Track logged-in user
-
     private DatabaseReference requestsDatabase;
-
+    private static final String PREF_NAME = "token_prefs";
+    private static final String LAST_TOKEN_TIME = "last_token_time";
+    private static final String TOKEN_COUNT = "token_count";
+    private static final long TOKENS_GIFT_INTERVAL = 2 * 60 * 1000; // 2 min u milisekundama
 
 
     @Override
@@ -68,6 +74,74 @@ public class LogUserActivity extends AppCompatActivity {
                 startActivity(new Intent(LogUserActivity.this, RangListaActivity.class));
             }
         });
+
+        String username = sharedPreferences.getString("username", "");
+        databaseReference.child("users").child(username).child("tokeni").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    long currentTokens = snapshot.getValue(Long.class);
+                    // Ažurirajte prikaz tokena u korisničkom interfejsu
+                    TextView tokeniTextView = findViewById(R.id.tokeni);
+                    tokeniTextView.setText("Tokeni: " + currentTokens);
+
+                    // Sačuvajte vrednost tokena i u SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("tokeni", (int) currentTokens);
+                    editor.apply();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handlujte greške
+            }
+        });
+
+        // Dobijanje vremena kada su tokeni poslednji put dodati
+        SharedPreferences tokenPrefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        long lastTokenTime = tokenPrefs.getLong(LAST_TOKEN_TIME, 0);
+
+        // Trenutno vreme
+        long currentTime = System.currentTimeMillis();
+
+        // Provera da li je prošlo više od 24 sata od poslednjeg dodavanja tokena
+        if (currentTime - lastTokenTime >= TOKENS_GIFT_INTERVAL) {
+            // Pribavi trenutnu vrednost tokena iz SharedPreferences
+            int currentTokenCount = tokenPrefs.getInt(TOKEN_COUNT, 0);
+
+            // Dodaj 5 tokena korisniku
+            int newTokenCount = currentTokenCount + 5;
+
+            // Ažuriraj vrednost tokena u SharedPreferences
+            SharedPreferences.Editor editor = tokenPrefs.edit();
+            editor.putLong(LAST_TOKEN_TIME, currentTime);
+            editor.putInt(TOKEN_COUNT, newTokenCount);
+            editor.apply();
+
+            // Ažuriraj vrednost tokena u bazi podataka
+            databaseReference.child("users").child(username).child("tokeni").setValue(newTokenCount)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Ako je uspešno ažurirano u bazi podataka, ažurirajte prikaz u korisničkom interfejsu
+                            tokeniTextView.setText("Tokeni: " + newTokenCount);
+
+                            // Sada možete obavestiti korisnika da su mu dodati tokeni
+                            Toast.makeText(LogUserActivity.this, "Dobili ste 5 tokena!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Ako nije uspelo ažuriranje u bazi podataka, obavestite korisnika o grešci
+                            Toast.makeText(LogUserActivity.this, "Greška pri ažuriranju tokena u bazi podataka.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        } else {
+            // Ako nije prošlo 1 minut, korisnik već ima dovoljno tokena
+        }
 
     }
 

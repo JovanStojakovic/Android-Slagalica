@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.slagalicaprojekat.R;
-import com.example.slagalicaprojekat.Services.TokenAddService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,9 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putInt("odigranePartije", odigranePartije);
                                     editor.apply();
 
-                                    scheduleTokenAdding();
-                                    updateTokensInDatabase(usernameTxt);
-
                                     Toast.makeText(LoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, LogUserActivity.class));
                                     finish();
@@ -107,38 +103,5 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void scheduleTokenAdding() {
-        Intent intent = new Intent(this, TokenAddService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        // Postavite AlarmManager da pokrene uslugu svakih 10 min
-        long interval = 10 * 60 * 1000; // 10 min u milisekundama
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, interval, pendingIntent);
-    }
-
-    private void updateTokensInDatabase(final String username) {
-        // Učitaj trenutni broj tokena iz baze
-        databaseReference.child("users").child(username).child("tokeni").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    long currentTokens = snapshot.getValue(Long.class);
-
-                    // Dodaj 5 tokena
-                    long newTokens = currentTokens + 5;
-
-                    // Ažuriraj broj tokena u bazi
-                    databaseReference.child("users").child(username).child("tokeni").setValue(newTokens);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handlujte greške
-            }
-        });
-    }
-
 }
+
